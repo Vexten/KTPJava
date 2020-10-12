@@ -46,7 +46,7 @@ public class Crawler implements Runnable {
 	 * Подготавливает Crawler к работе над URL.
 	 * @param URL - Контейнер с информацией о URL.
 	 */
-	public void set(URLContainer URL) {
+	private void set(URLContainer URL) {
 		this.current = URL;
 		this.domain = URL.getDomain();
 		this.location = URL.getLocation();
@@ -145,6 +145,7 @@ public class Crawler implements Runnable {
 				pagesize = pagesize/2 + imgpart + lnkpart;
 				this.current.setScore(pagesize);
 			}
+			io.close();
 		} catch (IOException e) {
 		}
 	}

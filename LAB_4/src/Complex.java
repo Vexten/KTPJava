@@ -135,28 +135,28 @@ public class Complex extends Number{
 	/** Модуль комплексного числа типа <code>double</code> */
 	@Override
 	public double doubleValue() {
-		double res = Math.sqrt(this.real*this.real + this.imag*this.imag);
+		double res = Math.sqrt(absSqr());
 		return res;
 	}
 	
 	/** Модуль комплексного числа типа <code>float</code> */
 	@Override
 	public float floatValue() {
-		float res = (float) Math.sqrt(this.real*this.real + this.imag*this.imag);
+		float res = (float) Math.sqrt(absSqr());
 		return res;
 	}
 	
 	/** Модуль комплексного числа типа <code>int</code> */
 	@Override
 	public int intValue() {
-		int res = (int) Math.sqrt(this.real*this.real + this.imag*this.imag);
+		int res = (int) Math.sqrt(absSqr());
 		return res;
 	}
 	
 	/** Модуль комплексного числа типа <code>long</code> */
 	@Override
 	public long longValue() {
-		long res = (long) Math.sqrt(this.real*this.real + this.imag*this.imag);
+		long res = (long) Math.sqrt(absSqr());
 		return res;
 	}
 }

@@ -55,7 +55,11 @@ public class URLPool {
 				}
 			}
 		}
-		return this.unvisited.pollFirst();
+		URLContainer res = null;
+		while (res == null) {
+			res = this.unvisited.pollFirst();
+		}
+		return res;
 	}
 	
 	public synchronized boolean isEmpty() {

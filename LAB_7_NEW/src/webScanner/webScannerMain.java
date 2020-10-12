@@ -11,7 +11,7 @@ public class webScannerMain {
 			this.start = new URLContainer(URL);
 			this.start.setDepth(0);
 			this.maxDepth = MAX_DEPTH;
-			if (this.maxDepth < 0) throw new Exception("Глубина поиска дожна быть больше 0");
+			if (this.maxDepth < 1) throw new Exception("Глубина поиска дожна быть больше 0");
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
 		}

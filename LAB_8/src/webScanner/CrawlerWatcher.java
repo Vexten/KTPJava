@@ -68,4 +68,11 @@ public class CrawlerWatcher {
 			thread.start();
 		}
 	}
+	
+	public void stop() {
+		for (Crawler crawler : crawlers) {
+			crawler.stop();
+		}
+		manager.close();
+	}
 }

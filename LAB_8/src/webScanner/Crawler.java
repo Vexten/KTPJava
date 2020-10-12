@@ -38,6 +38,9 @@ public class Crawler implements Runnable {
 	/** Поле времени ожидания сокета */
 	private int timeout;
 	
+	/** Поле флага остановки потока */
+	private boolean run;
+	
 	/**
 	 * Конструктор класса - инициализирует необходимые поля.
 	 * @param mng - DBManager для привязки.
@@ -49,6 +52,7 @@ public class Crawler implements Runnable {
 		this.pool = pool;
 		this.timeout = timeout;
 		this.foundURLs = new LinkedList<URLContainer>();
+		this.run = true;
 	}
 	
 	/**
@@ -67,13 +71,11 @@ public class Crawler implements Runnable {
 	public void run() {
 		this.set(pool.getUnvisited());
 		grabAndParse();
-		System.out.print(current.toString() + " посещен.\n");
 		manager.addVisited(current);
 		pool.addLinks(foundURLs);
-		while (!pool.isEmpty()) {
+		while (!pool.isEmpty() & run) {
 			this.set(pool.getUnvisited());
 			grabAndParse();
-			System.out.print(current.toString() + " посещен.\n");
 			manager.addVisited(current);
 			pool.addLinks(foundURLs);
 		}
@@ -96,7 +98,7 @@ public class Crawler implements Runnable {
 			StringBuffer html = new StringBuffer();
 			String ln;
 			// Продолжить только в случае, если подключение успешно
-			if (input.readLine().endsWith("OK")) {
+			if ((ln = input.readLine()).endsWith("OK")) {
 				// Собрать весь документ в строку
 				while (!(ln = input.readLine()).equals("</body>")) {
 					html.append(ln + "\n");
@@ -155,7 +157,11 @@ public class Crawler implements Runnable {
 				int lnkpart = (int) (((double)pagesize/4)*coeficent((double)pagesize,(double)links,(double)CrawlerWatcher.CHAR_PER_LINK));
 				pagesize = pagesize/2 + imgpart + lnkpart;
 				this.current.setScore(pagesize);
-			}	
+				System.out.print(current.toString() + " посещен.\n");
+			} else {
+				System.out.print(current.toString() + " " + ln + "\n");
+			}
+			io.close();
 		} catch (IOException e) {
 		}
 	}
@@ -174,5 +180,8 @@ public class Crawler implements Runnable {
 		}
 		return result;
 	}
-
+	
+	public void stop() {
+		this.run = false;
+	}
 }

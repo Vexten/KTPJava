@@ -45,4 +45,13 @@ public class DBManager {
 			System.out.print(e.getMessage());
 		}
 	}
+	
+	public void close() {
+		try {
+			this.statement.close();
+			this.database.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
